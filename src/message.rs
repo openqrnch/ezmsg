@@ -9,7 +9,7 @@ use crate::err::Error;
 
 use crate::validators::validate_topic;
 
-#[derive(Debug,Clone)]
+#[derive(Debug,Clone,Default)]
 pub struct Msg {
   topic: Option<String>,
   params: HashMap<String, String>
@@ -22,13 +22,13 @@ impl Msg {
   /// Note that a message object without a topic is invalid.  `set_topic` must
   /// be called to set a topic to make the message object valid.
   pub fn new() -> Self {
-    Msg { topic: None, params: HashMap::new() }
+    Msg { ..Default::default() }
   }
 
   /// Create a new mesage object with a topic.
   pub fn new_topic(topic: &str) -> Result<Self, Error> {
     validate_topic(topic)?;
-    Ok(Msg { topic: Some(topic.to_string()), params: HashMap::new() })
+    Ok(Msg { topic: Some(topic.to_string()), ..Default::default() })
   }
 
   /// Get a reference to the internal HashMap.
