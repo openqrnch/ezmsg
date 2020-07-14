@@ -177,6 +177,11 @@ parameter '{}'", key)));
 
     Ok(())
   }
+
+  /// Consume the Msg buffer and return the internal parameters HashMap.
+  pub fn into_params(self) -> HashMap<String, String> {
+    self.params
+  }
 }
 
 

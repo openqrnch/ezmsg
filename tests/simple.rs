@@ -13,6 +13,7 @@ fn simple() {
   assert_eq!(msg.get_param("Moo"), None);
 }
 
+
 #[test]
 fn integer() {
   let mut msg = Msg::new();
@@ -31,6 +32,22 @@ fn size() {
 
   msg.add_param("Num", 7 as usize);
   assert_eq!(msg.get_int::<usize>("Num").unwrap(), 7);
+}
+
+
+#[test]
+fn intoparams() {
+  let mut msg = Msg::new();
+
+  msg.add_str("Foo", "bar");
+  assert_eq!(msg.get_param("Foo").unwrap(), "bar");
+  assert_eq!(msg.get_param("Moo"), None);
+
+  let params = msg.into_params();
+  let kv = params.get_key_value("Foo");
+  if let Some((_k, v)) = kv {
+    assert_eq!(v, "bar");
+  }
 }
 
 
